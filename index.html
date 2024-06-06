@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // bt1
+        function calculateBMI(weight, height) {
+            try {
+                if (typeof weight !== "number" || typeof height !== "number") {
+                    throw new Error("sai.");
+                }
+
+                if (weight <= 0 || height <= 0) {
+                    throw new Error("sai.");
+                }
+
+                let bmi = weight / (height * height);
+                return bmi;
+            } catch (error) {
+                return error.message;
+            }
+        }
+
+        console.log(calculateBMI(70, 1.75));
+        console.log(calculateBMI(-70, 1.75));
+        console.log(calculateBMI("70", 1.75))
+        // bt2
+        function divideNumbers(a, b) {
+            try {
+                if (b === 0) {
+                    throw new Error("Lỗi: Không thể chia cho 0.");
+                }
+                if (typeof a !== "number" || typeof b !== "number") {
+                    throw new Error("lỗi: phải nhập vào là 2 số.");
+                }
+                let result = a / b;
+                return result;
+            } catch (error) {
+                return error.message;
+            } finally {
+                console.log("Kết thúc .");
+            }
+        }
+
+        console.log(divideNumbers(20, 4));
+        console.log(divideNumbers(9, 0));
+        console.log(divideNumbers("abc", 2));
+        // bt3
+        function sumWithPromise(arr) {
+            return new Promise((resolve, reject) => {
+                const sum = arr.reduce((a, b) => a + b, 0)
+                resolve(sum)
+            })
+        }
+        sumWithPromise([1, 2, 3, 4, 5, 6, 7])
+            .then(result => {
+                console.log(result);
+            })
+        // bt5
+        function isPrimeWithPromise(number) {
+            return new Promise((resolve, reject) => {
+                if (number <= 1) {
+                    reject(false)
+                }
+                if (number <= 3) {
+                    resolve(true)
+                }
+                if (number % 2 === 0 || number % 3 == 0) {
+                    reject(false)
+                }
+                for (let i = 5; i * i <= number; i += 6) {
+                    if (number % i === 0 || number % (i + 2) === 0) {
+                        reject(false)
+                    }
+                }
+                resolve(true)
+            })
+        }
+        isPrimeWithPromise(2)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(result => {
+                console.log(result);
+            })
+        // bt7
+        let myFirstPromise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("Success!");
+            }, 1000);
+        })
+        myFirstPromise
+            .then(result => {
+                console.log("Result!" + " " + result);
+            })
+        // bt8
+        function countDown(n) {
+            return new Promise((resolve, reject) => {
+                if (typeof n !== "number", n < 0) {
+                    reject(" số nguyên dương")
+                }
+                let count = n;
+                const intervalId = setInterval(() => {
+                    console.log(count);
+                    count--;
+                    if (count < 1) {
+                        clearInterval(intervalId)
+                        resolve("hoàn thành")
+                    }
+                }, 1000)
+            })
+        }
+        countDown(5)
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((result) => {
+                console.log(result);
+            });
+        //bt9
+        function sortArrayWithPromise(arr) {
+            return new Promise((resolve) => {
+                const sortArray = arr.slice().sort((a, b) => a - b)
+                resolve(sortArray)
+            })
+        }
+        sortArrayWithPromise([1, 6, 2, 5, 8, 5, 7, 2])
+            .then(result => {
+                console.log(result);
+            })
+        // Bt10
+        function findElement(arr, num) {
+            return new Promise((resolve, reject) => {
+                const foundElement = arr.find((element) => element === num);
+                if (foundElement !== undefined) {
+                    const index = arr.indexOf(foundElement);
+                    resolve({ element: foundElement, index: index });
+                } else {
+                    reject("Không tìm thấy");
+                }
+            });
+        }
+
+        findElement([1, 2, 3, 4, 5], 6)
+            .then((result) => {
+                console.log(`Tìm thấy ${result.element} ở vị trí ${result.index}`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    </script>
+
+</body>
+
+</html>
